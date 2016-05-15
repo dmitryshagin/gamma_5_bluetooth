@@ -12219,7 +12219,7 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
 <part name="P+2" library="supply1" deviceset="+5V" device=""/>
-<part name="JP2" library="pinhead" deviceset="PINHD-1X8" device=""/>
+<part name="JP2" library="pinhead" deviceset="PINHD-1X8" device="/90" value="CAR_IN"/>
 <part name="R2" library="rcl" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="R3" library="rcl" deviceset="R-EU_" device="R0805" value="220"/>
 <part name="R4" library="rcl" deviceset="R-EU_" device="R0805" value="220"/>
@@ -12251,7 +12251,6 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <part name="JP3" library="SparkFun-Connectors" deviceset="M03" device="POLAR" value="AUDIO"/>
 <part name="JP4" library="SparkFun-Connectors" deviceset="M02" device="POLAR_LOCK" value="MIC"/>
 <part name="R5" library="rcl" deviceset="R-EU_" device="R0805" value="220"/>
-<part name="P+8" library="supply1" deviceset="V+" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="DGND" device=""/>
 <part name="JP5" library="SparkFun-Connectors" deviceset="M01" device="PTH_LONGPAD" value="REMOTE"/>
 <part name="SUPPLY8" library="supply2" deviceset="DGND" device=""/>
@@ -12309,7 +12308,7 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <part name="U$3" library="SparkFun-Aesthetics" deviceset="VCC-ISO" device=""/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="VCCIO" device=""/>
 <part name="SUPPLY9" library="supply2" deviceset="DGND" device=""/>
-<part name="Q2" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="BC547"/>
+<part name="Q2" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="BC547" value="2N3904"/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="SUPPLY10" library="supply2" deviceset="DGND" device=""/>
 <part name="R13" library="rcl" deviceset="R-EU_" device="R0805" value="10k"/>
@@ -12322,6 +12321,7 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <part name="C22" library="SparkFun-Passives" deviceset="CAP_POL" device="3528" value="22uF"/>
 <part name="P+18" library="supply1" deviceset="+5V" device=""/>
 <part name="GND15" library="supply1" deviceset="GND" device=""/>
+<part name="U$4" library="SparkFun-Aesthetics" deviceset="VCC-ISO" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12365,7 +12365,6 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <instance part="JP3" gate="G$1" x="-83.82" y="-86.36" rot="MR180"/>
 <instance part="JP4" gate="G$1" x="-111.76" y="-96.52"/>
 <instance part="R5" gate="G$1" x="22.86" y="58.42" rot="R270"/>
-<instance part="P+8" gate="1" x="22.86" y="66.04"/>
 <instance part="SUPPLY3" gate="G$1" x="22.86" y="50.8"/>
 <instance part="JP5" gate="G$1" x="30.48" y="2.54" rot="R180"/>
 <instance part="SUPPLY8" gate="G$1" x="27.94" y="-121.92"/>
@@ -12436,6 +12435,7 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <instance part="C22" gate="G$1" x="-76.2" y="81.28"/>
 <instance part="P+18" gate="1" x="-76.2" y="88.9"/>
 <instance part="GND15" gate="1" x="-76.2" y="73.66"/>
+<instance part="U$4" gate="G$1" x="22.86" y="63.5"/>
 </instances>
 <busses>
 </busses>
@@ -12705,10 +12705,6 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <junction x="-12.7" y="60.96"/>
 </segment>
 <segment>
-<pinref part="R5" gate="G$1" pin="1"/>
-<pinref part="P+8" gate="1" pin="V+"/>
-</segment>
-<segment>
 <pinref part="U$1" gate="G$1" pin="VBAT"/>
 <pinref part="P+5" gate="1" pin="V+"/>
 <wire x1="-68.58" y1="-109.22" x2="-66.04" y2="-109.22" width="0.1524" layer="91"/>
@@ -12888,18 +12884,15 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 </net>
 <net name="N$12" class="1">
 <segment>
-<wire x1="-22.86" y1="-109.22" x2="-25.4" y2="-109.22" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="RST"/>
-<wire x1="-25.4" y1="-109.22" x2="-30.48" y2="-109.22" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="-109.22" x2="-25.4" y2="-109.22" width="0.1524" layer="91"/>
 <pinref part="OK4" gate="A" pin="COL"/>
 <wire x1="27.94" y1="-111.76" x2="10.16" y2="-111.76" width="0.1524" layer="91"/>
-<wire x1="10.16" y1="-111.76" x2="-22.86" y2="-111.76" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="-111.76" x2="-22.86" y2="-109.22" width="0.1524" layer="91"/>
+<wire x1="10.16" y1="-111.76" x2="-25.4" y2="-111.76" width="0.1524" layer="91"/>
 <pinref part="R21" gate="G$1" pin="1"/>
 <junction x="10.16" y="-111.76"/>
 <pinref part="C13" gate="G$1" pin="1"/>
-<wire x1="-22.86" y1="-109.22" x2="-25.4" y2="-109.22" width="0.1524" layer="91"/>
+<wire x1="-25.4" y1="-111.76" x2="-25.4" y2="-109.22" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="RST"/>
+<wire x1="-25.4" y1="-109.22" x2="-30.48" y2="-109.22" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="OUT_RESET" class="1">
@@ -13046,6 +13039,10 @@ MMBT5088LT1G - TRANS-11160 (SOT-23, 50 mA 30V)&lt;br&gt;
 <pinref part="OK5" gate="A" pin="VE"/>
 <wire x1="7.62" y1="-58.42" x2="5.08" y2="-58.42" width="0.1524" layer="91"/>
 <wire x1="5.08" y1="-58.42" x2="5.08" y2="-60.96" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R5" gate="G$1" pin="1"/>
+<pinref part="U$4" gate="G$1" pin="VCC-ISO"/>
 </segment>
 </net>
 <net name="N$15" class="1">
