@@ -18,11 +18,11 @@
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
 DEVICE     = atmega328p
-CLOCK      = 16000000L
-PROGRAMMER = -c arduino
+CLOCK      = 11059200UL
+PROGRAMMER = -c usbasp
 OBJECTS    = main.o i2c_slave.o
-BAUD	   = 57600
-PORT       = /dev/tty.wchusbserial1410
+# BAUD	   = 115200
+# PORT       = /dev/tty.wchusbserial1410
 # PORT       = /dev/ttyUSB0
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
@@ -51,10 +51,10 @@ PORT       = /dev/tty.wchusbserial1410
 # Tune the lines below only if you know what you are doing:
 
 #AVRdude setup for ISP
-#AVRDUDE_ISP = avrdude $(PROGRAMMER_ISP) -p $(DEVICE)
+AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
 
 #AVRdude setup for bootloader
-AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -P $(PORT) -b $(BAUD) -v
+# AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -P $(PORT) -b $(BAUD) -v
 
 
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
@@ -81,13 +81,14 @@ flash:	all
 eeprom:	all
 	$(AVRDUDE) -U eeprom:w:main.eep
 
+fuse: all
+	$(AVRDUDE) -U lfuse:w:0xef:m -U hfuse:w:0xd9:m
+	# -U efuse:w:0xfc:m
+	#11.0592MHz, BOD 4.3V	
+
 
 # Xcode uses the Makefile targets "", "clean" and "install"
-install: flash fuse
-
-# if you use a bootloader, change the command below appropriately:
-load: all
-	bootloadHID main.hex
+install: flash
 
 clean:
 	rm -f main.hex main.elf main.eep $(OBJECTS)
