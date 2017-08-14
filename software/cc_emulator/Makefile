@@ -51,7 +51,7 @@ OBJECTS    = main.o i2c_slave.o
 # Tune the lines below only if you know what you are doing:
 
 #AVRdude setup for ISP
-AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
+AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -B32
 
 #AVRdude setup for bootloader
 # AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -P $(PORT) -b $(BAUD) -v

@@ -1,12 +1,12 @@
 
-DEVICE     = atmega328p
-CLOCK      = 16000000L
-PROGRAMMER = -c arduino
+DEVICE     = atmega88p
+CLOCK      = 8000000L
+PROGRAMMER = -c usbasp
 OBJECTS    = main.o
-BAUD	   = 57600
-PORT       = /dev/tty.wchusbserial1410
+BAUD	   = 10
+# PORT       = /dev/tty.wchusbserial1420
 
-AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -P $(PORT) -b $(BAUD) -v
+AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -B $(BAUD) -v
 
 
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
@@ -28,6 +28,8 @@ flash:	all
 eeprom:	all
 	$(AVRDUDE) -U eeprom:w:main.eep
 
+fuse: all
+	$(AVRDUDE) -U lfuse:w:0xde:m -U hfuse:w:0xdf:m -U efuse:w:0xf9:m
 
 install: flash fuse
 

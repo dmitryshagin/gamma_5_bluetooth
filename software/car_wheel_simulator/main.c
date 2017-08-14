@@ -7,8 +7,8 @@ static const uint8_t C[4][15] = {
 			{0x00, 0x00, 0xFF, 0x5D, 0x55, 0x77, 0x77, 0x5D, 0x57, 0x55, 0x55, 0x77, 0x77, 0x77, 0x77}, //vol+
 			{0x00, 0x00, 0xFF, 0x5D, 0x55, 0x77, 0x77, 0x5D, 0x55, 0x55, 0x57, 0x77, 0x77, 0x77, 0x77}}; //vol-
 
-#define OUT_ON 			(PORTB |=  (1<<2))
-#define OUT_OFF 		(PORTB &= ~(1<<2))
+#define OUT_ON 			(PORTB |=  (1<<1))
+#define OUT_OFF 		(PORTB &= ~(1<<1))
 
 #define LED_ON 			(PORTB |=  (1<<5))
 #define LED_OFF 		(PORTB &= ~(1<<5))
@@ -19,6 +19,14 @@ static const uint8_t C[4][15] = {
 #define BUTTON_VOL_UP_PRESSED 	(!(PIND & (1 << 3)))
 #define BUTTON_VOL_DN_PRESSED 	(!(PIND & (1 << 2)))
 
+
+// void pwm_gen(){
+// 	TCCR1A |= (1<<COM1A1)|(1<<WGM11);
+// 	TCCR1B |= (1<<WGM13)|(1<<WGM12)|(1<<CS10);
+// 	OCR1A = 0;
+// 	ICR1 = 255;
+// 	TCNT1 = 0;
+// }
 
 
 void send_byte(uint8_t byte){
@@ -51,21 +59,26 @@ void send_repeat(){
 
 int main(void){
 	DDRD = 0x00; //PORTD - all input
-	DDRB  = (1<<2)|(1<<5); //output pin - internal led
+	DDRB  = (1<<1)|(1<<2)|(1<<5); //output pin - internal led
 	PORTD |= (1<<PD2)|(1<<PD3)|(1<<PD4)|(1<<PD5);
 	uint8_t pressed = 0;
-    
+	// pwm_gen();
+    // OCR1A = 255;
 	while(1){
 		if(BUTTON_UP_PRESSED || BUTTON_DN_PRESSED || BUTTON_VOL_UP_PRESSED || BUTTON_VOL_DN_PRESSED){
 			if(pressed==0){
 				if(BUTTON_UP_PRESSED){
 					send_command(0);
+					// OCR1A=100;
 				}else if(BUTTON_DN_PRESSED){
 					send_command(1);
+					// OCR1A=125;
 				}else if(BUTTON_VOL_UP_PRESSED){
 					send_command(2);
+					// OCR1A=150;
 				}else{
 					send_command(3);
+					// OCR1A=75;
 				}	
 				_delay_ms(33);
 				pressed = 1;
@@ -75,6 +88,7 @@ int main(void){
 			}
 		
 		}else{
+			// OCR1A=255;
 			pressed = 0;
 			OUT_ON;
 			LED_ON;

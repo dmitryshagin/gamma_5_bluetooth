@@ -144,11 +144,11 @@ void init(){
 int main(void){
 	init();
 	USART_init();
-	BT_ON;
 	_delay_ms(25);
 	seq_number = 0;
 	seq_pos = 0;
 	booted = 0;
+	BT_OFF;
 	SET_CRQ_LOW;
 	while(1){
 
@@ -186,6 +186,8 @@ int main(void){
 				}
 				is_playing = 1;
 				BT_ON;
+				_delay_ms(10);
+				USART_Print("AT#VU\r\n"); //vol up. just in case :)
 			}
 			if(data==0x19){
 				is_playing = 0;

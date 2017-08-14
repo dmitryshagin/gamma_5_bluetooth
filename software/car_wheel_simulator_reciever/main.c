@@ -15,23 +15,33 @@ static const uint8_t C[4][10] = {
 
 #define TO_HEX(i) (i <= 9 ? 0x30 + i : 0x37 + i)
 
-#define RESOLUTION 5 //delay in uS to calculate bit length. just to avoid timers
+#define RESOLUTION 2 //delay in uS to calculate bit length. just to avoid timers
+// #define RESOLUTION 10 //delay in uS to calculate bit length. just to avoid timers
 
 uint8_t pulse_length[8]={0,0,0,0,0,0,0};
 uint8_t calibration_index = 0;
 uint16_t calibrated_pulse = 0;
 uint8_t command[10];
+uint8_t pwm_val[4]={10,40,70,100};
+
+
+void pwm_gen(){
+	TCCR1A |= (1<<COM1A1)|(1<<WGM11);
+	TCCR1B |= (1<<WGM13)|(1<<WGM12)|(1<<CS10);
+	OCR1A = 0;
+	ICR1 = 255;
+	TCNT1 = 0;
+}
 
 
 
-#define BAUD 57600        //The baudrate that we want to use
+#define BAUD 38400        //The baudrate that we want to use
 #define BAUD_PRESCALLER ((F_CPU / 16UL / BAUD ) - 1)    //The formula that does all the required maths
 void USART_init(void){
- 
- UBRR0H = (uint8_t)(BAUD_PRESCALLER>>8);
- UBRR0L = (uint8_t)(BAUD_PRESCALLER);
- UCSR0B = (1<<TXEN0);
- UCSR0C = ((1<<UCSZ00)|(1<<UCSZ01));
+ 	UBRR0H = (uint8_t)(BAUD_PRESCALLER>>8);
+ 	UBRR0L = (uint8_t)(BAUD_PRESCALLER);
+ 	UCSR0B = (1<<TXEN0);
+ 	UCSR0C = ((1<<UCSZ00)|(1<<UCSZ01));
 }
 
 void USART_send( unsigned char data){
@@ -63,8 +73,16 @@ void init(){
 	USART_init();
 }
 void look_for_start(){
-	while(!INPUT_LOW){}; //waiting for signal to go low
-	_delay_ms(3);
+	uint8_t waiting_for = 0;
+	while(!INPUT_LOW){
+		_delay_ms(1);
+		waiting_for++;
+		if(waiting_for>250){
+			OCR1A = 0xFF;//turn off key press if no ney pressed for 100ms
+		}
+	}; //waiting for signal to go low
+	OCR1A = 0xFF;
+	_delay_ms(2);
 }
 
 
@@ -159,8 +177,12 @@ int define_cmd(){
 int main(void){
 	init();
     LED_OFF;
-    USART_Print("Hello. ");
+    DDRB  = (1<<1)|(1<<2)|(1<<5); //output pin - internal led
+	USART_Print("Hello");
     uint8_t i;
+    pwm_gen();
+    OCR1A = 255;
+
 	while(1){
 		clean_data();
 		look_for_start();
@@ -168,6 +190,7 @@ int main(void){
 		
 		calculate_frequency();
 		read_data();
+
 		int cmd = define_cmd();
 
 		USART_Print("Calibration pulse: ");
@@ -183,7 +206,9 @@ int main(void){
 		USART_send('\n');
 		if(cmd<0){
 			USART_Print("No command found :(");
+			OCR1A=0xFF;
 		}else{
+			OCR1A=pwm_val[cmd];
 			USART_Print("Command: ");
 			USART_send(TO_HEX(cmd));
 			LED_ON;
