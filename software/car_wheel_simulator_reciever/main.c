@@ -1,5 +1,6 @@
 #include <util/delay.h>
 #include <avr/io.h>
+#include <avr/wdt.h> 
 
 static const uint8_t C[4][10] = {
 			{0x77, 0x77, 0x5D, 0x57, 0x55, 0x55, 0x77, 0x77, 0x77, 0x77}, //vol+
@@ -79,6 +80,7 @@ void look_for_start(){
 		waiting_for++;
 		if(waiting_for>250){
 			OCR1A = 0xFF;//turn off key press if no ney pressed for 100ms
+			wdt_reset();
 		}
 	}; //waiting for signal to go low
 	OCR1A = 0xFF;
@@ -182,11 +184,14 @@ int main(void){
     uint8_t i;
     pwm_gen();
     OCR1A = 255;
+    
+    wdt_enable(WDTO_500MS);
 
 	while(1){
 		clean_data();
 		look_for_start();
 		skip_start();
+		wdt_reset();
 		
 		calculate_frequency();
 		read_data();
@@ -239,6 +244,7 @@ int main(void){
 					}else{
 						USART_send('!');
 					}
+					wdt_reset();
 					_delay_ms(20);
 				}
 				_delay_ms(1);
