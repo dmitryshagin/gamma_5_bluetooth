@@ -21,7 +21,7 @@
 #define NACK TWCR = (1<<TWIE) | (1<<TWINT) | (1<<TWEN)
 #define ACK  TWCR = (1<<TWIE) | (1<<TWEA) | (1<<TWINT) | (1<<TWEN)
 
-#define BAUD 9600        //The baudrate that we want to use
+#define BAUD 115200        //The baudrate that we want to use
 #define BAUD_PRESCALLER ((F_CPU / 16UL / BAUD ) - 1)    //The formula that does all the required maths
 
 #define I2C_ADDR 0x18

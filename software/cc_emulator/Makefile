@@ -18,7 +18,7 @@
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
 DEVICE     = atmega328p
-CLOCK      = 16000000UL
+CLOCK      = 11059200UL
 PROGRAMMER = -c usbasp
 OBJECTS    = main.o i2c_slave.o
 # BAUD	   = 115200
