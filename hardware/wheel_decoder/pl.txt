@@ -1,0 +1,34 @@
+Partlist
+
+Exported from decoder.brd at 12.02.2020 16:01
+
+EAGLE Version 8.5.0 Copyright (c) 1988-2017 Autodesk, Inc.
+
+Assembly variant: 
+
+Part     Value          Package    Library        Position (mm)         Orientation
+
++12V                    3,81/1,4   wirepad        (41.5 3)              R0
+C1       33             C0603      resistor       (19.05 20.32)         R270
+C2       10n            C0603      resistor       (23.16 19.32)         R180
+C3       100n           C0603      resistor       (8.1 6.73)            R180
+C4       100n           C0603      resistor       (23.4 3.6)            R90
+C5       15             C0603      resistor       (3.11 11.14)          R180
+C6       15             C0603      resistor       (3.1 13.16)           R0
+C7       100n           C0603      resistor       (17.17 13.14)         R0
+C8       100n           C0603      resistor       (3.13 16.44)          R180
+C9       2.2uF          C3225      resistor       (41.5 20.4)           R90
+C10      1uF            C1206      resistor       (35.7 7.5)            MR0
+D1       BAV99          SOT23      diode          (22.86 23.63)         R0
+IC1      ATMEGA88P      TQFP32-08  atmel          (10.44 15.17)         R0
+IC2      MC78M05ABDTG   DPACK      v-reg          (36.7 12.1)           MR270
+Q1       BC858C         SOT23-BEC  transistor-pnp (30.28 24.83)         R270
+Q2       BC848B         SOT23      transistor-npn (28.04 19.82)         R90
+Q3       8.000Mhz       HC-49      special        (3.25 12.13)          MR90
+R1       39k            R0603      resistor       (18.65 23.73)         R270
+R2       18k            R0603      resistor       (26.47 23.93)         R270
+R3       4.7k           R0603      resistor       (31.65 21.69)         R0
+R4       4.7k           R0603      resistor       (32.05 18.75)         R180
+R5       10k            R0603      resistor       (25.1 16.88)          R180
+R6       10k            R0603      resistor       (10.8 7.6)            R90
+R7       10k            R0603      resistor       (25.5 3.6)            R270
